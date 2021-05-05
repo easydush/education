@@ -9,12 +9,16 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from environ import environ
+
+SRC_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve().parent.parent.parent.parent
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,9 +41,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
+    'account',
+    'djoser',
+    'django_filters',
+    'django_extensions',
+    'rest_framework_swagger',
+    'drf_yasg',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8480",
+    "http://localhost:8491",
+    "http://localhost:8080",
+    "http://localhost:8000",
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+)
+CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,10 +98,15 @@ WSGI_APPLICATION = 'education.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'education',
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -113,4 +144,43 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+AUTH_USER_MODEL = 'account.User'
 STATIC_URL = '/static/'
+DEFAULT_MAX_LENGTH = 100
+STATIC_ROOT = PROJECT_DIR / 'static_root/static'
+MEDIA_ROOT = PROJECT_DIR / 'static_root/media'
+
+MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'core.paginator.Paginator',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+# Djoser settings
+# https://djoser.readthedocs.io/en/latest/settings.html
+
+DJOSER = {
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': False,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'SET_PASSWORD_RETYPE': False,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SERIALIZERS': {
+        'current_user': 'account.serializers.UserInfoSerializer',
+    },
+
+}
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
