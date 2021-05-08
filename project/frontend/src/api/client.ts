@@ -6,9 +6,8 @@ const getAxiosConfig = (): AxiosRequestConfig => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const headers: any = {};
 
-
     if (token) {
-        headers.Authorization = `Token ${ token }`;
+        headers.Authorization = `Token ${token}`;
     }
 
     return {
@@ -50,7 +49,11 @@ class ApiClient {
     }
 
     setAuthHeader(token: string): void {
-        this.instance.defaults.headers.Authorization = `Token ${ token }`;
+        this.instance.defaults.headers.Authorization = `Token ${token}`;
+    }
+
+    removeAuthHeader(): void {
+        this.instance.defaults.headers.Authorization = '';
     }
 }
 

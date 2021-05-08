@@ -1,40 +1,39 @@
 export type User = {
-    token: string,
+  token: string,
 };
 
 export const EmptyUser: User = {
-    token: '',
+  token: '',
 };
 
 export type Account = {
-    name: string,
-    is_student: boolean,
-    email: string,
+  name: string,
+  email: string,
+  is_teacher: boolean,
 };
 
 export type UserCredentials = {
-    email: string,
-    password: string,
+  email: string,
+  password: string,
 };
 
 export type RegisterCredentials = {
-    name: string,
-    is_student: boolean,
-    email: string,
-    password: string,
-    re_password: string,
+  name: string,
+  email: string,
+  password: string,
+  re_password: string,
 };
 
 export type ResetCredentials = {
-    current_password: string,
-    password: string,
-    re_password: string,
+  current_password: string,
+  password: string,
+  re_password: string,
 };
 
 export type ConfirmResetCredentials = {
-    uid: string,
-    token: string,
-    current_password: string,
-    password: string,
-    re_password: string,
+  uid: string,
+  token: string,
+  current_password: string,
+  password: string,
+  re_password: string,
 };
