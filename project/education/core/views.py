@@ -11,13 +11,13 @@ from .serializers import CourseSerializer, LessonSerializer
 
 class CourseViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = None
+        queryset = Course.objects.none()
         if request.GET.get('view'):
             queryset = Course.objects.all()
         elif request.user.is_teacher:
             queryset = Course.objects.filter(teacher=request.user)
         elif request.user.is_authenticated:
-            queryset = Course.objects.filter(listeners__exact=request.user)
+            queryset = Course.objects.filter(listeners__listener=request.user)
         serializer = CourseSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -26,7 +26,7 @@ class CourseViewSet(viewsets.ViewSet):
         if request.user.is_teacher:
             queryset = Course.objects.filter(teacher=request.user)
         elif request.user.is_authenticated:
-            queryset = Course.objects.filter(listeners__exact=request.user)
+            queryset = Course.objects.filter(listeners__listener=request.user)
         course = get_object_or_404(queryset, pk=pk)
         serializer = CourseSerializer(course, context={'request': request})
         return Response(serializer.data)
