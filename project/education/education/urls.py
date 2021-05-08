@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers, permissions
 import djoser
-
+import core.views
+import studying.views
 router = routers.DefaultRouter()
-
+router.register(r'course', core.views.CourseViewSet, basename='course')
+router.register(r'listeners', studying.views.CourseListenersViewSet, basename='listener')
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 

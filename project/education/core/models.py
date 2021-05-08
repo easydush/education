@@ -1,4 +1,3 @@
-
 from django.db import models
 
 from education.settings import DEFAULT_MAX_LENGTH
@@ -23,7 +22,7 @@ class Module(models.Model):
 
 
 class Lesson(models.Model):
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True)
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
 
     def __str__(self):
@@ -31,7 +30,7 @@ class Lesson(models.Model):
 
 
 class Unit(models.Model):
-    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
     text = models.TextField()
 
@@ -40,6 +39,7 @@ class Unit(models.Model):
 
 
 class Question(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
 
     def __str__(self):
@@ -47,6 +47,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
     is_right = models.BooleanField(default=False)
 
