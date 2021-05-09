@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'account',
+    'studying',
     'djoser',
     'django_filters',
     'django_extensions',

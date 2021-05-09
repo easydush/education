@@ -32,10 +32,10 @@ class User(AbstractUser):
     name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     email = models.EmailField(
         max_length=DEFAULT_MAX_LENGTH, unique=True, blank=False)
-    is_student = models.BooleanField()
+    is_teacher = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'is_student']
+    REQUIRED_FIELDS = ['name', 'is_teacher']
 
     objects = UserManager()
 
