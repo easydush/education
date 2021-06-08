@@ -1,36 +1,37 @@
 import React, { useCallback } from 'react';
-import { Button, Form, Input } from 'antd';
-import { authorize } from '../../api';
+import {
+    LoginFormWrapper,
+    LoginPageWrapper,
+    LogoText,
+    LogoTextWrapper,
+    TabsWrapper,
+} from './styles';
+import { LoginForm } from '../../components/LoginForm';
+import { Tabs } from 'antd';
+import { RegisterForm } from '../../components/RegisterForm';
+import { authorize } from "../../api";
 
+const { TabPane } = Tabs;
 export const Login = (): JSX.Element => {
-
-    const handleFinish = useCallback((values) => {
-        authorize(values);
-    }, []);
-
     return (
-        <Form onFinish={ handleFinish }>
-            <Form.Item
-                label='Email'
-                name='email'
-                rules={ [{required: true, message: 'Please enter your email!'}] }
-            >
-                <Input/>
-            </Form.Item>
-
-            <Form.Item
-                label='Password'
-                name='password'
-                rules={ [{required: true, message: 'Please enter your password!'}] }
-            >
-                <Input.Password/>
-            </Form.Item>
-
-            <Form.Item>
-                <Button type='primary' htmlType='submit'>
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
+        <LoginPageWrapper>
+            <LogoTextWrapper>
+                <LogoText>
+                    EasyLearn
+                </LogoText>
+            </LogoTextWrapper>
+            <LoginFormWrapper>
+                <TabsWrapper>
+                    <Tabs defaultActiveKey="login">
+                        <TabPane tab="Вход" key="login">
+                            <LoginForm />
+                        </TabPane>
+                        <TabPane tab="Регистрация" key="registration">
+                            <RegisterForm />
+                        </TabPane>
+                    </Tabs>
+                </TabsWrapper>
+            </LoginFormWrapper>
+        </LoginPageWrapper>
     );
 };

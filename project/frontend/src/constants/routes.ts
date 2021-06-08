@@ -2,6 +2,10 @@ export enum Routes {
     LOGIN = '/login',
     ROOT = '/',
     MAIN = '/main',
-    REGISTRATION = '/register',
-    ACTIVATION = '/activate'
+    REGISTER = '/register',
+    ACTIVATION = '/activation',
+    ACTIVATE = '/activate/:uid/:token',
+    VOTE = '/vote',
+    PROFILE = '/profile',
+    TEACHER_RATING = '/teacher-rating'
 }
