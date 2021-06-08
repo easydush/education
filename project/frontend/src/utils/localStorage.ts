@@ -8,6 +8,7 @@ export enum localStorageKeys {
     ACCOUNT = 'account',
     EMAIL = 'email',
     UNVOTED_courseS = 'unvoted_courses',
+    COURSE = 'course',
     COURSES = 'courses',
     MY_COURSES = 'my_courses',
 }
@@ -45,6 +46,13 @@ export const setAccessKey = (key: string): void => {
 };
 export const setCourses = (courses: Course[]): void => {
     localStorage.setItem(localStorageKeys.COURSES, JSON.stringify(courses));
+};
+export const setCurrentCourse = (course: Course): void => {
+    localStorage.setItem(localStorageKeys.COURSE, JSON.stringify(course));
+};
+export const getCurrentCourse = (): Course | null => {
+    const localCourse: string | null = localStorage.getItem(localStorageKeys.COURSE);
+    return !isNil(localCourse) ? JSON.parse(localCourse) : null;
 };
 export const getCurrentCourses = (): Course[] | null => {
     const courses: string | null = localStorage.getItem(localStorageKeys.COURSES);

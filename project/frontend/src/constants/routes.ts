@@ -5,7 +5,8 @@ export enum Routes {
     REGISTER = '/register',
     ACTIVATION = '/activation',
     ACTIVATE = '/activate/:uid/:token',
-    VOTE = '/vote',
+    VOTE = '/courses/mine',
     PROFILE = '/profile',
-    TEACHER_RATING = '/teacher-rating'
+    TEACHER_RATING = '/courses',
+    COURSE = '/course/:id',
 }

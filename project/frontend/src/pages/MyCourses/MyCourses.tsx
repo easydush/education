@@ -11,9 +11,6 @@ import { getCurrentCourses, getMyCurrentCourses } from "../../utils";
 export const MyCourses = () : JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Course[]>([]);
-  const handleJoin = useCallback((values) => {
-    authorize(values);
-  }, []);
   const columns = useMemo(
     () =>
       [
@@ -47,8 +44,8 @@ export const MyCourses = () : JSX.Element => {
           dataIndex: 'join',
           render: function renderJoin(value, record) {
             return (
-              <Link to='/' onClick={handleJoin}>
-                Присоединиться
+              <Link to={'course/'+record.id+'/'}>
+                Подробнее
               </Link>);
           },
         },

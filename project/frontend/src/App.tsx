@@ -8,6 +8,7 @@ import { MyCourses } from './pages/MyCourses';
 import { Profile } from './pages/Profile';
 import { ActivatePage } from './pages/Activate';
 import { Activation } from './pages/Activation';
+import { CourseView } from "./pages/Course";
 
 function App(): JSX.Element {
   return (
@@ -20,6 +21,7 @@ function App(): JSX.Element {
         <PrivateRoute exact component={Main} path={R.ROOT} />
         <PrivateRoute exact component={Main} path={R.TEACHER_RATING} />
         <PrivateRoute exact component={MyCourses} path={R.VOTE} />
+        <PrivateRoute exact component={CourseView} path={R.COURSE} />
         <PrivateRoute exact component={Profile} path={R.PROFILE} />
       </Switch>
     </Router>
