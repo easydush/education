@@ -12,9 +12,6 @@ import { subscribe } from "../../api/studying";
 export const Main = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Course[]>([]);
-  const handleJoin = useCallback((courseId) => {
-    subscribe(courseId);
-  }, []);
   const columns = useMemo(
     () =>
       [
@@ -48,7 +45,7 @@ export const Main = (): JSX.Element => {
           dataIndex: 'join',
           render: function renderJoin(value, record) {
             return (
-              <Link to={'course/'+record.id}>
+              <Link to={'course/'+record.id+'/'}>
                 Подробнее
               </Link>);
           },
