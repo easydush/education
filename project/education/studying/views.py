@@ -11,7 +11,7 @@ from studying.serializers import CourseListenerSerializer
 
 class CourseListenerViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = CourseListener.objects.filter(course=request.GET.get('course_id'))
+        queryset = CourseListener.objects.filter(course=request.GET.get('courseId'))
         serializer = CourseListenerSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -23,7 +23,7 @@ class CourseListenerViewSet(viewsets.ViewSet):
 
     def create(self, request):
         if not request.user.is_teacher:
-            course = Course.objects.get(pk=request.data.get('course_id'))
+            course = Course.objects.get(pk=request.data.get('courseId'))
             listener = CourseListener.objects.create(listener=request.user,
                                                      course=course)
             serializer = CourseListenerSerializer(listener, context={'request': request})
