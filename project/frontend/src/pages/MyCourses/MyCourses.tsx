@@ -40,11 +40,19 @@ export const MyCourses = () : JSX.Element => {
           sorter: (a, b) => a?.teacher?.name?.localeCompare(b.teacher.name),
         },
         {
+          title: 'Набранный балл',
+          dataIndex: 'points',
+          render: function renderPoints(value, record) {
+            return (
+              record?.points);
+          },
+        },
+        {
           title: '',
           dataIndex: 'join',
           render: function renderJoin(value, record) {
             return (
-              <Link to={'course/'+record.id+'/'}>
+              <Link to={'/course/'+record.id+'/'}>
                 Подробнее
               </Link>);
           },

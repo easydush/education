@@ -9,4 +9,5 @@ export enum Routes {
     PROFILE = '/profile',
     TEACHER_RATING = '/courses',
     COURSE = '/course/:id',
+    LESSON = '/lesson/:id',
 }
