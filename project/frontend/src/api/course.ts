@@ -39,3 +39,12 @@ export const getLesson = (id: string): void => {
       message.error('Error with getting courses');
     });
 };
+export const answer = (id: string): void => {
+  apiClient.put(`answer/${id}/`, {})
+    .then((response: AxiosResponse) => {
+      message.success('Successfully answered');
+    })
+    .catch(() => {
+      message.error('Error with answering');
+    });
+};

@@ -8,6 +8,7 @@ import {  getCurrentLesson } from "../../utils";
 import { InfoBlock, PageHeaderText, StyledContent, StyledPageHeader } from "../Main/styles";
 import { useParams } from "react-router-dom";
 import { subscribe } from "../../api/studying";
+import { TestForm } from "../../components/TestForm";
 
 export const LessonView = (): JSX.Element => {
   const handleJoin = useCallback(() => {
@@ -36,6 +37,7 @@ export const LessonView = (): JSX.Element => {
         <InfoBlock>
           {data?.text}
         </InfoBlock>
+        <TestForm id={id}/>
       </StyledContent>
     </Layout>
   );

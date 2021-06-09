@@ -3,11 +3,11 @@ import { Account } from "./user";
 export interface Question {
   id: number;
   title: string;
+  answers: Answer[];
 }
 
 export interface Answer {
   id: number;
-  question: Question;
   title: string;
   is_right: boolean;
 }
@@ -16,6 +16,7 @@ export interface Lesson {
   id: number;
   title: string;
   text: string;
+  questions: Question[];
 }
 
 export interface Module {
@@ -31,4 +32,5 @@ export interface Course {
   listeners: string;
   is_joined: boolean;
   modules: Module[];
+  points: number;
 }

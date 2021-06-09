@@ -42,7 +42,10 @@ export const CourseView = (): JSX.Element => {
         {data?.is_joined}
         {!data?.is_joined ?
           <Button onClick={handleJoin}>Присоединиться</Button> :
-          <ModulesList />
+          <>
+            <h5>Набранный балл: {data?.points}</h5>
+            <ModulesList />
+          </>
         }
       </StyledContent>
     </Layout>
