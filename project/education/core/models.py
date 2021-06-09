@@ -40,7 +40,7 @@ class Lesson(models.Model):
 
 
 class Question(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='questions')
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
 
     def __str__(self):
@@ -48,7 +48,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
     is_right = models.BooleanField(default=False)
 

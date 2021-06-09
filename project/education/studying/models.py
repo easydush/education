@@ -12,14 +12,14 @@ class CourseListener(models.Model):
     points = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
-        return f'{self.user} | {self.course}'
+        return f'{self.listener} | {self.course}'
 
     class Meta:
         unique_together = ('course', 'listener')
 
 
 class ListenerAnswer(models.Model):
-    listener = models.ForeignKey(User, on_delete=models.CASCADE)
+    listener = models.ForeignKey(CourseListener, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def __str__(self):

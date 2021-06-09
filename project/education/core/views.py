@@ -5,8 +5,9 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Course, Lesson
+from .models import Course, Lesson, Answer
 from .serializers import CourseSerializer, LessonSerializer, CourseWithListenersSerializer
+from studying.models import ListenerAnswer, CourseListener
 
 
 class CourseViewSet(viewsets.ViewSet):
@@ -38,13 +39,6 @@ class CourseViewSet(viewsets.ViewSet):
                                                title=serializer.get('title'),
                                                )
                 serializer = CourseSerializer(course, context={'request': request})
-
-                # files = request.FILES
-                # for file in files:
-                #     if file != 'document':
-                #         document = Document.objects.create(course=course, file=files.get(file),
-                #                                            is_presentation=True)
-
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors,
@@ -66,12 +60,6 @@ class CourseViewSet(viewsets.ViewSet):
                     course.name = serializer.get('title')
                     course.save()
                     serializer = CourseSerializer(course, context={'request': request})
-
-                    # files = request.FILES
-                    # for file in files:
-                    #     if file != 'document':
-                    #         document = Document.objects.create( file=files.get(file),
-                    #                                            is_presentation=True)
 
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 except Course.DoesNotExist:
@@ -115,13 +103,6 @@ class LessonViewSet(viewsets.ViewSet):
                                                title=serializer.get('title'),
                                                )
                 serializer = LessonSerializer(lesson, context={'request': request})
-
-                # files = request.FILES
-                # for file in files:
-                #     if file != 'document':
-                #         document = Document.objects.create(Lesson=Lesson, file=files.get(file),
-                #                                            is_presentation=True)
-
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors,
@@ -143,13 +124,6 @@ class LessonViewSet(viewsets.ViewSet):
                     lesson.name = serializer.get('title')
                     lesson.save()
                     serializer = LessonSerializer(Lesson, context={'request': request})
-
-                    # files = request.FILES
-                    # for file in files:
-                    #     if file != 'document':
-                    #         document = Document.objects.create(, file=files.get(file),
-                    #                                            is_presentation=True)
-
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 except Lesson.DoesNotExist:
                     response = {'message': 'Function is allowed for manager only.'}
@@ -159,6 +133,30 @@ class LessonViewSet(viewsets.ViewSet):
                                 status=status.HTTP_400_BAD_REQUEST)
         else:
             response = {'message': 'Function is allowed for managers only.'}
+            return Response(response, status=status.HTTP_403_FORBIDDEN)
+
+
+class AnswerViewSet(viewsets.ViewSet):
+    def list(self, request):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def retrieve(self, request, pk=None):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def create(self, request):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def update(self, request, pk=None):
+        if not request.user.is_teacher:
+            listener = CourseListener.objects.get(listener=request.user)
+            answer = Answer.objects.get(pk=pk)
+            new_answer = ListenerAnswer.objects.create(listener=listener, answer=answer)
+            if answer.is_right:
+                listener.points += 1
+                listener.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            response = {'message': 'Function is allowed for students only.'}
             return Response(response, status=status.HTTP_403_FORBIDDEN)
 
 
