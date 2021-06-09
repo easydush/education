@@ -26,6 +26,7 @@ import studying.views
 router = routers.DefaultRouter()
 router.register(r'course', core.views.CourseViewSet, basename='course')
 router.register(r'lesson', core.views.LessonViewSet, basename='lesson')
+router.register(r'answer', core.views.AnswerViewSet, basename='answer')
 router.register(r'listeners', studying.views.CourseListenerViewSet, basename='listener')
 
 
