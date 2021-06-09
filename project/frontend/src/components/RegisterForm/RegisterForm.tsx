@@ -14,7 +14,7 @@ export const RegisterForm = (): JSX.Element => {
     const handleFinish = useCallback(async (values) => {
         setLoading(true);
         await register(values);
-        history.push(R.ACTIVATION);
+        history.push(R.LOGIN);
 
         setLoading(false);
     }, [history]);

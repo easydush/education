@@ -1,13 +1,13 @@
 import { User } from '../types';
 import { isNil } from 'lodash';
-import { Course } from '../types/course';
+import { Course, Lesson } from '../types/course';
 
 export enum localStorageKeys {
     USER = 'user',
     ACCESS_KEY = 'access_key',
     ACCOUNT = 'account',
     EMAIL = 'email',
-    UNVOTED_courseS = 'unvoted_courses',
+    LESSON = 'lesson',
     COURSE = 'course',
     COURSES = 'courses',
     MY_COURSES = 'my_courses',
@@ -54,6 +54,13 @@ export const getCurrentCourse = (): Course | null => {
     const localCourse: string | null = localStorage.getItem(localStorageKeys.COURSE);
     return !isNil(localCourse) ? JSON.parse(localCourse) : null;
 };
+export const setCurrentLesson = (lesson: Lesson): void => {
+    localStorage.setItem(localStorageKeys.LESSON, JSON.stringify(lesson));
+};
+export const getCurrentLesson = (): Lesson | null => {
+    const localLesson: string | null = localStorage.getItem(localStorageKeys.LESSON);
+    return !isNil(localLesson) ? JSON.parse(localLesson) : null;
+};
 export const getCurrentCourses = (): Course[] | null => {
     const courses: string | null = localStorage.getItem(localStorageKeys.COURSES);
     return !isNil(courses) ? JSON.parse(courses) : null;
@@ -64,12 +71,5 @@ export const setMyCourses = (courses: Course[]): void => {
 };
 export const getMyCurrentCourses = (): Course[] | null => {
     const courses: string | null = localStorage.getItem(localStorageKeys.MY_COURSES);
-    return !isNil(courses) ? JSON.parse(courses) : null;
-};
-export const setUnvotedcourses = (courses: Course[]): void => {
-    localStorage.setItem(localStorageKeys.UNVOTED_courseS, JSON.stringify(courses));
-};
-export const getUnvotedcourses = (): Course[] | null => {
-    const courses: string | null = localStorage.getItem(localStorageKeys.UNVOTED_courseS);
     return !isNil(courses) ? JSON.parse(courses) : null;
 };

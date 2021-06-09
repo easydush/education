@@ -1,28 +1,27 @@
 import { Button, Layout } from 'antd';
 import { HeaderCustom } from '../../components/Header';
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { getCourse } from "../../api";
+import React, { useCallback, useEffect, useState } from 'react';
+import { getLesson } from "../../api";
 
-import { Course } from '../../types/course';
-import { getCurrentCourse } from "../../utils";
+import { Lesson } from '../../types/course';
+import {  getCurrentLesson } from "../../utils";
 import { InfoBlock, PageHeaderText, StyledContent, StyledPageHeader } from "../Main/styles";
 import { useParams } from "react-router-dom";
 import { subscribe } from "../../api/studying";
-import { ModulesList } from "../../components/ModulesList";
 
-export const CourseView = (): JSX.Element => {
+export const LessonView = (): JSX.Element => {
   const handleJoin = useCallback(() => {
     subscribe(id);
   }, []);
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Course>();
+  const [data, setData] = useState<Lesson>();
   useEffect(() => {
     async function getData() {
       setLoading(true);
       await setTimeout(() => {
-        getCourse(id);
-        setData(getCurrentCourse() ?? undefined);
+        getLesson(id);
+        setData(getCurrentLesson() ?? undefined);
         setLoading(false);
       }, 500);
     }
@@ -35,15 +34,8 @@ export const CourseView = (): JSX.Element => {
       <StyledContent>
         <StyledPageHeader title={<PageHeaderText>{data?.title}</PageHeaderText>} backIcon={false} />
         <InfoBlock>
-          <h1>{data?.teacher?.name}</h1>
-          {data?.teacher?.email}
+          {data?.text}
         </InfoBlock>
-        Слушатели: <h3>{data?.listeners}</h3>
-        {data?.is_joined}
-        {!data?.is_joined ?
-          <Button onClick={handleJoin}>Присоединиться</Button> :
-          <ModulesList />
-        }
       </StyledContent>
     </Layout>
   );

@@ -44,7 +44,7 @@ export const MyCourses = () : JSX.Element => {
           dataIndex: 'join',
           render: function renderJoin(value, record) {
             return (
-              <Link to={'course/'+record.id+'/'}>
+              <Link to={'/course/'+record.id+'/'}>
                 Подробнее
               </Link>);
           },
