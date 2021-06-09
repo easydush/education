@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { getLesson } from "../../api";
 
 import { Lesson } from '../../types/course';
-import {  getCurrentLesson } from "../../utils";
+import { getCurrentLesson } from "../../utils";
 import { InfoBlock, PageHeaderText, StyledContent, StyledPageHeader } from "../Main/styles";
 import { useParams } from "react-router-dom";
 import { subscribe } from "../../api/studying";
@@ -37,7 +37,9 @@ export const LessonView = (): JSX.Element => {
         <InfoBlock>
           {data?.text}
         </InfoBlock>
-        <TestForm id={id}/>
+        <InfoBlock>
+          <TestForm id={id} />
+        </InfoBlock>
       </StyledContent>
     </Layout>
   );
