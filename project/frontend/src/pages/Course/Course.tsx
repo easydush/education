@@ -38,6 +38,7 @@ export const CourseView = (): JSX.Element => {
           <h1>{data?.teacher?.name}</h1>
           {data?.teacher?.email}
         </InfoBlock>
+        <InfoBlock>
         Слушатели: <h3>{data?.listeners}</h3>
         {data?.is_joined}
         {!data?.is_joined ?
@@ -47,6 +48,7 @@ export const CourseView = (): JSX.Element => {
             <ModulesList />
           </>
         }
+        </InfoBlock>
       </StyledContent>
     </Layout>
   );
