@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Course, Lesson
-from .serializers import CourseSerializer, LessonSerializer
+from .serializers import CourseSerializer, LessonSerializer, CourseWithListenersSerializer
 
 
 class CourseViewSet(viewsets.ViewSet):
@@ -22,13 +22,9 @@ class CourseViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = None
-        if request.user.is_teacher:
-            queryset = Course.objects.filter(teacher=request.user)
-        elif request.user.is_authenticated:
-            queryset = Course.objects.filter(listeners__listener=request.user)
+        queryset = Course.objects.all()
         course = get_object_or_404(queryset, pk=pk)
-        serializer = CourseSerializer(course, context={'request': request})
+        serializer = CourseWithListenersSerializer(course, context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
