@@ -14,7 +14,7 @@ class Course(models.Model):
 
 
 class Module(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='modules')
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
 
     def __str__(self):
@@ -22,20 +22,21 @@ class Module(models.Model):
 
 
 class Lesson(models.Model):
-    module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True)
-    title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
-
-    def __str__(self):
-        return self.title
-
-
-class Unit(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True, related_name='lessons')
     title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
     text = models.TextField()
 
     def __str__(self):
         return self.title
+
+
+# class Unit(models.Model):
+# lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+# title = models.CharField(null=True, blank=True, max_length=DEFAULT_MAX_LENGTH)
+# text = models.TextField()
+#
+# def __str__(self):
+#     return self.title
 
 
 class Question(models.Model):

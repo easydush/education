@@ -9,6 +9,7 @@ class CourseListener(models.Model):
     course = models.ForeignKey(Course, related_name='listeners', on_delete=models.CASCADE)
     listener = models.ForeignKey(User, on_delete=models.CASCADE)
     mark = models.PositiveSmallIntegerField(default=0)
+    points = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return f'{self.user} | {self.course}'

@@ -99,7 +99,7 @@ class LessonViewSet(viewsets.ViewSet):
         if request.user.is_teacher:
             queryset = Lesson.objects.filter(module__course__teacher=request.user)
         elif request.user.is_authenticated:
-            queryset = Lesson.objects.filter(module__course__listeners__exact=request.user)
+            queryset = Lesson.objects.filter(module__course__listeners__listener=request.user)
         course = get_object_or_404(queryset, pk=pk)
         serializer = LessonSerializer(course, context={'request': request})
         return Response(serializer.data)
